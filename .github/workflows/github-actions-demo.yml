@@ -1,9 +1,11 @@
 name: Test exit code
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is testing out exit code.
 on: [push]
 jobs:
   Generate_exit_code:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - run: |
           python exit_code.py
