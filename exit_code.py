@@ -1,3 +1,3 @@
 import sys
 
-sys.exit('mismatches found!')
+sys.exit(99)
