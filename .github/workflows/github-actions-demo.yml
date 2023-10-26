@@ -10,10 +10,10 @@ jobs:
 
       - name: Run python script
       - id:   exit_code_generator
-      - run:  |
+        run:  |
           python exit_code.py
 
       - name: Catch exit code
         if:   steps.exit_code_generator.outcome == 'failure'
-      - run:  |
+        run:  |
           echo 'send message'
