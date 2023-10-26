@@ -7,5 +7,13 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: |
+
+      - name: Run python script
+      - id:   exit_code_generator
+      - run:  |
           python exit_code.py
+
+      - name: Catch exit code
+        if:   ${{ steps.exit_code_generator.outcome == 'failure' }}
+      - run:  |
+          echo 'send message'
