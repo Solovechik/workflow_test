@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run python script
-      - id:   exit_code_generator
+        id:   exit_code_generator
         run:  |
           python exit_code.py
 
