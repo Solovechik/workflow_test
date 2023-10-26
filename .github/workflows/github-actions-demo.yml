@@ -10,6 +10,7 @@ jobs:
 
       - name: Run python script
         id:   exit_code_generator
+        continue-on-error: true
         run:  |
           python exit_code.py
 
