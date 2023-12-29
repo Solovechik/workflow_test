@@ -8,19 +8,22 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Run python script
-        id:   exit_code_generator
-        continue-on-error: true
-        run:  |
-          python exit_code.py
+      - name: Get branch name
+        run: echo "branch=${GITHUB_REF#refs/heads/}"
 
-      - name: Catch exit code
-        if:   always() && steps.exit_code_generator.outcome == 'failure'
-        env:
-          WEBHOOK_URL: https://chat.googleapis.com/v1/spaces/AAAAqt2tvNo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xc_gcoYN9mOqSJBlG3CaWv50uZj8ZNtm5ZQ_Bhl992Q
-        run: |
-          curl -X POST -H 'Content-Type: application/json' -d \
-          '{"text": "GitHub Actions Airbyte Freshness Test Failed\n \
-          Run URL: '"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'\n \
-          See results in Redash: https://redash.tools.improvado.io/embed/query/9441/visualization/10947?api_key=8K0KW0F3lLhcfq2QyfGCVTQbBmpz01q22lWmdPdc&"}' \
-          $WEBHOOK_URL
+      # - name: Run python script
+      #   id:   exit_code_generator
+      #   continue-on-error: true
+      #   run:  |
+      #     python exit_code.py
+
+      # - name: Catch exit code
+      #   if:   always() && steps.exit_code_generator.outcome == 'failure'
+      #   env:
+      #     WEBHOOK_URL: https://chat.googleapis.com/v1/spaces/AAAAqt2tvNo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xc_gcoYN9mOqSJBlG3CaWv50uZj8ZNtm5ZQ_Bhl992Q
+      #   run: |
+      #     curl -X POST -H 'Content-Type: application/json' -d \
+      #     '{"text": "GitHub Actions Airbyte Freshness Test Failed\n \
+      #     Run URL: '"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'\n \
+      #     See results in Redash: https://redash.tools.improvado.io/embed/query/9441/visualization/10947?api_key=8K0KW0F3lLhcfq2QyfGCVTQbBmpz01q22lWmdPdc&"}' \
+      #     $WEBHOOK_URL
