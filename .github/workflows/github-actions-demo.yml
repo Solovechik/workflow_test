@@ -11,6 +11,9 @@ jobs:
       - name: Get branch name
         run: echo "branch=${GITHUB_REF#refs/heads/}"
 
+      - name: Get branch name
+        run: echo "${GITHUB_REF##*/}
+
       # - name: Run python script
       #   id:   exit_code_generator
       #   continue-on-error: true
