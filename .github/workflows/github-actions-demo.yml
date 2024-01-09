@@ -15,7 +15,9 @@ jobs:
         run: echo "${GITHUB_HEAD_REF##*/}"
 
       - name: Get pr name
-        run: echo "${{ github.event.number }}"
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        run: echo "$PR_NUMBER"
 
       # - name: Run python script
       #   id:   exit_code_generator
