@@ -50,6 +50,8 @@
 on:
   push:
 
+permissions:
+  contents: write
 
 name: Create Release
 
