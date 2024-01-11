@@ -43,14 +43,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: dbt_internal_analytics_sources-v${{ steps.createmilestone.outputs.version }}
-          release_name: dbt_internal_analytics_sources-v${{ steps.semvers.outputs.patch }}
+          tag_name: v${{ steps.semvers.outputs.version }}
+          release_name: v${{ steps.semvers.outputs.patch }}
           body: |
             Changes in this Release
             - First Change
             - Second Change
           draft: false
           prerelease: false
+
+      - name: test
+        run: echo ${{ steps.createmilestone.outputs }}
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
