@@ -4,6 +4,8 @@ on: [push, pull_request]
 jobs:
   Generate_exit_code:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -21,18 +23,9 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+          bodyFile: "body.md"
 
       # - name: Run python script
       #   id:   exit_code_generator
