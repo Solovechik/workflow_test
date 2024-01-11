@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: v${{ steps.semvers.outputs.version }}
+          tag_name: v${{ steps.semvers.outputs.patch }}
           release_name: v${{ steps.semvers.outputs.patch }}
           body: |
             Changes in this Release
@@ -53,7 +53,10 @@ jobs:
           prerelease: false
 
       - name: test
-        run: echo ${{ steps.createmilestone.outputs }}
+        run: | 
+          echo ${{ steps.createmilestone.outputs }}
+          echo ${{ steps.createmilestone.outputs.major }}
+          echo ${{ steps.createmilestone.outputs.name }}
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
