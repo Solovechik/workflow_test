@@ -1,6 +1,10 @@
-name: Test exit code
+name: Testing actions
 run-name: ${{ github.actor }} is testing out exit code
-on: [push, pull_request]
+on: 
+  push:
+    tags:
+    - '*'
+    
 jobs:
   Generate_exit_code:
     runs-on: ubuntu-latest
