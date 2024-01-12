@@ -19,49 +19,46 @@ jobs:
         with:
           fetch-depth: 0 
 
-      # - name: Get previous tag
-      #   id: previous_tag
-      #   uses: "WyriHaximus/github-action-get-previous-tag@v1"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get previous tag
+        id: previous_tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Get next minor version
-      #   id: sem_versions
-      #   uses: "WyriHaximus/github-action-next-semvers@v1"
-      #   with:
-      #     version: ${{ steps.previous_tag.outputs.tag }}
+      - name: Get next minor version
+        id: sem_versions
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previous_tag.outputs.tag }}
 
       - name: Generate version
         id: generate_version
         run: |
           if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
-            echo "patch"
-            # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+            echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
           elif ${{ contains(toJson(github.event.pull_request.labels.*.name), 'minor') }}; then
-            echo "minor"
-            # echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+            echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
           elif ${{ contains(toJson(github.event.pull_request.labels.*.name), 'major') }}; then
-            echo "major"
-            # echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+            echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
           else
             echo 'Wrong tag'
             exit 1
           fi
 
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      #   with:
-      #     tag_name: ${{ steps.generate_version.outputs.version }}
-      #     release_name: ${{ steps.generate_version.outputs.version }}
-      #     body: |
-      #       Changes in this Release
-      #       - First Change
-      #       - Second Change
-      #     draft: false
-      #     prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.generate_version.outputs.version }}
+          release_name: ${{ steps.generate_version.outputs.version }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
