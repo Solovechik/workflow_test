@@ -39,9 +39,9 @@ jobs:
             echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
           elif [ ${{ contains(github.event.pull_request.labels.*.name, 'major') }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
-          else
-            echo "Wrong tag"
-            exit 1
+          # else
+          #   echo "Wrong tag"
+          #   exit 1
           fi
 
       - name: Create Release
