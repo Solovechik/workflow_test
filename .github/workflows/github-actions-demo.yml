@@ -35,7 +35,7 @@ jobs:
         id: generate_version
         run: |
           echo ${{ github.event.pull_request.labels.*.name }}
-          echo ${{ github.event.pull_request.labels.[0].name }}
+          # echo ${{ github.event.pull_request.labels.[0].name }}
           echo ${{ toJSON(github.event.pull_request.labels.*.name) }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}
