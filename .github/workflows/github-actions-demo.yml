@@ -32,8 +32,7 @@ jobs:
 
       - name: Get label name
         id: label_name
-        if: |
-          contains( github.event.pull_request.labels.*.name, 'bug') && 'true'
+        if: contains( github.event.pull_request.labels.*.name, 'buggg')
         run: echo "test"
 
 
