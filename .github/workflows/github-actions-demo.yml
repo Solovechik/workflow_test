@@ -41,7 +41,7 @@ jobs:
       - name: Get label name
         id: label_name
         run: |
-          if [ contains(github.event.pull_request.labels.*.name, 'patch') ]; then
+          if [ ${{ contains(github.event.pull_request.labels.*.name, 'patch') }} ]; then
             echo "version=${{ steps.semvers.outputs.v_patch }}" >> $GITHUB_OUTPUT
           fi
 
