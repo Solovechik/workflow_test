@@ -33,12 +33,15 @@ jobs:
       - name: Generate version
         id: generate_version
         run: |
-          if [ ${{ contains(github.event.pull_request.labels.*.name, 'patch') }} ]; then
+          if [ ${{ github.event.pull_request.labels.[0].name, == 'patch' }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
           elif [ ${{ contains(github.event.pull_request.labels.*.name, 'minor') }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
-          else
+          elif [ ${{ contains(github.event.pull_request.labels.*.name, 'major') }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+          else
+            echo $
+            exit 1
           fi
 
       - name: Create Release
