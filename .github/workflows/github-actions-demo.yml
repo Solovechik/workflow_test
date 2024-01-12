@@ -32,7 +32,8 @@ jobs:
 
       - name: Get label name
         id: label_name
-        run: echo ${{ github.event.pull_request.label.name }}
+        if: |
+          contains( github.event.pull_request.labels.*.name, 'Bug') && echo 'true'
 
 
       # - name: Create Release
