@@ -34,7 +34,7 @@ jobs:
       - name: Generate version
         id: generate_version
         run: |
-          echo ${{ github.event.pull_request.labels.name }}
+          echo ${{ github.event.pull_request.labels[*] }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'major') }}
