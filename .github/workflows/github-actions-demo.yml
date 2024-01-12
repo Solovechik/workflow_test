@@ -36,10 +36,10 @@ jobs:
         run: |
           echo ${{ github.event.pull_request }}
           echo ${{ github.event.pull_request.labels.*.name }}
-          echo ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          echo ${{ github.event_name }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}
-          echo ${{ contains(toJSON(github.event.pull_request.labels.*.name), 'major') }}
+          echo ${{ contains(github.event.pull_request.labels.*.name, 'major') }}
           # if [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'patch') }} ]; then
           #   echo "patch"
           #   # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
