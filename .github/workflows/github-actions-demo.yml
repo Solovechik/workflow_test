@@ -58,7 +58,7 @@ jobs:
               ${{ github.event.pull_request.commits_url }}
               ${{ github.event.pull_request.diff_url }}
               ${{ github.event.pull_request.title }}
-              ${{ github.event.pull_request.url string }}
+              ${{ github.event.pull_request.url }}
           draft: false
           prerelease: false
 
