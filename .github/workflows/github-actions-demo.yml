@@ -29,11 +29,16 @@ jobs:
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
           version: ${{ steps.previoustag.outputs.tag }}
+          
+      - name: Get label name
+        id: label_name_1
+        if: contains( github.event.pull_request.labels.*.name, 'invalid')
+        run: echo "invalid"
 
       - name: Get label name
         id: label_name
-        if: contains( github.event.pull_request.labels.*.name, 'buggg')
-        run: echo "test"
+        if: contains( github.event.pull_request.labels.*.name, 'Bug')
+        run: echo "bug"
 
 
       # - name: Create Release
