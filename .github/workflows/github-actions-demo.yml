@@ -35,7 +35,7 @@ jobs:
         env:
           LABELS: ${{ github.event.pull_request.labels.*.name }}
         run: |
-          if [ ${{ contains(LABELS, 'patch') }} ]; then
+          if [ ${{ contains($LABELS, 'patch') }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
           elif [ ${{ contains(github.event.pull_request.labels.*.name, 'minor') }} ]; then
             echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
