@@ -33,6 +33,11 @@ jobs:
       - name: Generate version
         id: generate_version
         run: |
+          echo github.event.pull_request.body
+          echo github.event.pull_request.commits_url
+          echo github.event.pull_request.diff_url
+          echo github.event.pull_request.title
+          echo github.event.pull_request.url string         
           if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
             echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
           elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
@@ -44,20 +49,20 @@ jobs:
             exit 1
           fi
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ steps.generate_version.outputs.version }}
-          release_name: ${{ steps.generate_version.outputs.version }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #   with:
+      #     tag_name: ${{ steps.generate_version.outputs.version }}
+      #     release_name: ${{ steps.generate_version.outputs.version }}
+      #     body: |
+      #       Changes in this Release
+      #       - First Change
+      #       - Second Change
+      #     draft: false
+      #     prerelease: false
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
