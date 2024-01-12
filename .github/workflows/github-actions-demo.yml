@@ -19,38 +19,40 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: Get previous tag
-        id: previous_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get previous tag
+      #   id: previous_tag
+      #   uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get next minor version
-        id: sem_versions
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: ${{ steps.previous_tag.outputs.tag }}
+      # - name: Get next minor version
+      #   id: sem_versions
+      #   uses: "WyriHaximus/github-action-next-semvers@v1"
+      #   with:
+      #     version: ${{ steps.previous_tag.outputs.tag }}
 
       - name: Generate version
         id: generate_version
         run: |
           echo ${{ github.event.pull_request.labels.*.name }}
+          echo ${{ github.event.pull_request.labels.[0].name }}
+          echo ${{ toJSON(github.event.pull_request.labels.*.name) }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}
           echo ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}
           echo ${{ contains(toJSON(github.event.pull_request.labels.*.name), 'major') }}
-          if [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'patch') }} ]; then
-            echo "patch"
-            # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
-          elif [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'minor') }} ]; then
-            echo "minor"
-            # echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
-          elif [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'major') }} ]; then
-            echo "major"
-            # echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
-          else
-            echo 'Wrong tag'
-            exit 1
-          fi
+          # if [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'patch') }} ]; then
+          #   echo "patch"
+          #   # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+          # elif [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'minor') }} ]; then
+          #   echo "minor"
+          #   # echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+          # elif [ ${{ contains(toJson(github.event.pull_request.labels.*.name), 'major') }} ]; then
+          #   echo "major"
+          #   # echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+          # else
+          #   echo 'Wrong tag'
+          #   exit 1
+          # fi
 
       # - name: Create Release
       #   id: create_release
