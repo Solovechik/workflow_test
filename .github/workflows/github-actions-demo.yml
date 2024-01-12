@@ -33,7 +33,7 @@ jobs:
       - name: Generate version
         id: generate_version
         env:
-          LABELS: ${{ github.event.pull_request.labels.*.name }}
+          LABELS: github.event.pull_request.labels.*.name
         run: |
           if ${{ contains($LABELS, 'patch') }}; then
             echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
