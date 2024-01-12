@@ -36,21 +36,17 @@ jobs:
         run: |
           if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
             echo "patch"
-            # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT fi
-          if ${{ contains(toJson(github.event.pull_request.labels.*.name), 'minor') }}; then
+            # echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+          elif ${{ contains(toJson(github.event.pull_request.labels.*.name), 'minor') }}; then
             echo "minor"
-            # echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT fi
-          if ${{ contains(toJson(github.event.pull_request.labels.*.name), 'major') }}; then
+            # echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+          elif ${{ contains(toJson(github.event.pull_request.labels.*.name), 'major') }}; then
             echo "major"
-            # echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT fi
-          # else
-          #   echo 'Wrong tag'
-          #   exit 1
-          # fi
-          echo ${{ github.event.pull_request.body }}
-          echo ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}
-          echo ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}
-          echo ${{ contains(github.event.pull_request.labels.*.name, 'major') }}
+            # echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+          else
+            echo 'Wrong tag'
+            exit 1
+          fi
 
       # - name: Create Release
       #   id: create_release
