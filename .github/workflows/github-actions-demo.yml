@@ -54,11 +54,11 @@ jobs:
           release_name: ${{ steps.generate_version.outputs.version }}
           body: |
             Changes in this Release
-              echo github.event.pull_request.body
-              echo github.event.pull_request.commits_url
-              echo github.event.pull_request.diff_url
-              echo github.event.pull_request.title
-              echo github.event.pull_request.url string      
+              echo ${{ github.event.pull_request.body }}
+              ${{ github.event.pull_request.commits_url }}
+              ${{ github.event.pull_request.diff_url }}
+              ${{ github.event.pull_request.title }}
+              ${{ github.event.pull_request.url string }}
           draft: false
           prerelease: false
 
