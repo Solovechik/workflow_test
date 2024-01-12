@@ -32,14 +32,12 @@ jobs:
 
       - name: Generate version
         id: generate_version
-        env:
-          LABELS: github.event.pull_request.labels.*.name
         run: |
-          if ${{ contains(env.LABELS, 'patch') }}; then
+          if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
             echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(env.LABELS, 'minor') }}; then
+          elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
             echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(fromJSON(env.LABELS), 'major') }}; then
+          elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
             echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
           else
             echo 'Wrong tag'
