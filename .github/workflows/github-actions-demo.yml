@@ -38,11 +38,12 @@ jobs:
       #   if: contains( github.event.pull_request.labels.*.name, 'patch')
       #   # run: echo "invalid"
 
-      # - name: Get label name
-      #   id: label_name
-      #   if: contains( github.event.pull_request.labels.*.name, 'Bug')
-      #   run: echo "bug"
-
+      - name: Get label name
+        id: label_name
+        run: |
+          if [ contains(github.event.pull_request.labels.*.name, 'patch') ]; then
+            echo "version=${{ steps.semvers.outputs.v_patch }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create Release
         id: create_release
@@ -50,8 +51,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.semvers.outputs.v_minor }}
-          release_name: ${{ steps.semvers.outputs.v_minor }}
+          tag_name: ${{ steps.label_name.outputs.version }}
+          release_name: ${{ steps.label_name.outputs.version }}
           body: |
             Changes in this Release
             - First Change
