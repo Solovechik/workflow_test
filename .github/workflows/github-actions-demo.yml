@@ -52,7 +52,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.ACTIONS_KEY }}" \
             https://api.github.com/repos/Solovechik/triggered_workflow_test/actions/workflows/workflow_to_trigger.yml/dispatches \
-            -d '{"ref":"refs/heads/master","inputs":{"version":"1.2.2"}}'
+            -d '{"ref":"refs/heads/master","inputs":{"version":"${{ steps.generate_version.outputs.version }}"}}'
 
 
       # - name: Create Release
