@@ -1,7 +1,6 @@
 name: Testing actions
 run-name: ${{ github.actor }} is testing out actions
 on: 
-  # push:
   pull_request:
     types: [ labeled ]
 
