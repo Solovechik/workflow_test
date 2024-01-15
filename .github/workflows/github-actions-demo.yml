@@ -54,6 +54,7 @@ jobs:
             https://api.github.com/repos/Solovechik/triggered_workflow_test/actions/workflows/workflow_to_trigger.yml/dispatches \
             -d '{"ref":"dev","inputs":{"version":"${{ steps.generate_version.outputs.version }}"}'
 
+
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
