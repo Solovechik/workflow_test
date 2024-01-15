@@ -1,0 +1,32 @@
+name: Triggered workflow
+run-name: ${{ github.actor }} is testing triggers
+on: 
+  [repository_dispatch]
+
+permissions:
+  contents: write
+    
+jobs:
+  Label_and_sem_versions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Create Release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+              with:
+                tag_name: test
+                release_name: test
+                body: |
+                  Changes in this Release
+                    ${{ github.event.pull_request.body }}
+                draft: false
+                prerelease: false
