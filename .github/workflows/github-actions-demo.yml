@@ -3,6 +3,22 @@ run-name: ${{ github.actor }} is testing out actions
 on: 
   pull_request:
     # types: [ labeled ]
+  workflow_dispatch:
+   inputs:
+    Triggered workflow:
+      description: 'ًTriggered workflow which will be triggered'
+      required: true
+      default: 'Triggered workflow'
+
+    Triggered workflow_github_account:
+      description: 'GitHub Account Owner'
+      required: true
+      default: 'Solovechik'
+
+    Triggered workflow_repo_github:
+      description: 'repo-name'
+      required: true
+      default: 'workflow_test' 
 
 permissions:
   contents: write
@@ -44,19 +60,28 @@ jobs:
             exit 1
           fi
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ steps.generate_version.outputs.version }}
-          release_name: ${{ steps.generate_version.outputs.version }}
-          body: |
-            Changes in this Release
-              ${{ github.event.pull_request.body }}
-          draft: false
-          prerelease: false
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Test
+        run: |
+          curl -X POST https://api.github.com/repos/Solovechik/workflow_test/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACTIONS_KEY }} \
+          --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - uses: actions/checkout@v3
+
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #   with:
+      #     tag_name: ${{ steps.generate_version.outputs.version }}
+      #     release_name: ${{ steps.generate_version.outputs.version }}
+      #     body: |
+      #       Changes in this Release
+      #         ${{ github.event.pull_request.body }}
+      #     draft: false
+      #     prerelease: false
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
