@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out actions
 on: 
   # push:
   pull_request:
-    # types: [ labeled ]
+    types: [ labeled ]
 
 permissions:
   contents: write
