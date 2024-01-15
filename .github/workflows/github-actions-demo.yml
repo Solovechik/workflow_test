@@ -1,13 +1,14 @@
 name: Testing actions
 run-name: ${{ github.actor }} is testing out actions
 on: 
-  push:
+  pull_request:
+    # types: [ labeled ]
 
 permissions:
   contents: write
     
 jobs:
-  Generate_exit_code:
+  Label_and_sem_versions:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -17,25 +18,31 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: Get Previous tag
-        id: previoustag
+      - name: Get previous tag
+        id: previous_tag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get next minor version
-        id: semvers
+        id: sem_versions
         uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
-          version: ${{ steps.previoustag.outputs.tag }}
+          version: ${{ steps.previous_tag.outputs.tag }}
 
-      # - name: Create new milestone
-      #   id: createmilestone
-      #   uses: "WyriHaximus/github-action-create-milestone@v1"
-      #   with:
-      #     title: ${{ steps.semvers.outputs.patch }}
-      #   env:
-      #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Generate version
+        id: generate_version
+        run: |   
+          if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
+            echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+          elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
+            echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+          elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
+            echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+          else
+            echo 'Wrong tag'
+            exit 1
+          fi
 
       - name: Create Release
         id: create_release
@@ -43,23 +50,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: v${{ steps.semvers.outputs.patch }}
-          release_name: v${{ steps.semvers.outputs.patch }}
+          tag_name: ${{ steps.generate_version.outputs.version }}
+          release_name: ${{ steps.generate_version.outputs.version }}
           body: |
             Changes in this Release
-            - First Change
-            - Second Change
+              ${{ github.event.pull_request.body }}
           draft: false
           prerelease: false
-
-      - name: test
-        run: | 
-          echo ${{ steps.semvers.outputs.major }}
-          echo ${{ steps.semvers.outputs.minor }}
-          echo ${{ steps.semvers.outputs.patch }}
-          echo ${{ steps.semvers.outputs.v_major }}
-          echo ${{ steps.semvers.outputs.v_minor }}
-          echo ${{ steps.semvers.outputs.v_patch }}
 
       # - name: Get branch name
       #   run: echo "branch=${GITHUB_REF#refs/heads/}"
@@ -72,6 +69,12 @@ jobs:
       #     PR_NUMBER: ${{ github.event.number }}
       #   run: echo "$PR_NUMBER"
 
+  # Generate_exit_code:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - name: Check out repository code
+  #         uses: actions/checkout@v4
+          
       # - name: Run python script
       #   id:   exit_code_generator
       #   continue-on-error: true
