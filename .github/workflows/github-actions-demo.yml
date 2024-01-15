@@ -5,17 +5,17 @@ on:
     types: [ labeled ]
   workflow_dispatch:
    inputs:
-    Triggered workflow:
+    triggered_workflow:
       description: 'ًTriggered workflow which will be triggered'
       required: true
-      default: 'Triggered workflow'
+      default: 'triggered_workflow'
 
-    Triggered workflow_github_account:
+    triggered_workflow_github_account:
       description: 'GitHub Account Owner'
       required: true
       default: 'Solovechik'
 
-    Triggered workflow_repo_github:
+    triggered_workflow_repo_github:
       description: 'repo-name'
       required: true
       default: 'workflow_test' 
