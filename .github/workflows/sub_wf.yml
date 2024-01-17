@@ -1,0 +1,11 @@
+name: Sub wf
+on:
+  workflow_call
+
+jobs:
+    do_some_work:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Some work 
+          run: echo 'Some work is done'
+    
