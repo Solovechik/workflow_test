@@ -9,5 +9,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Call local wf
-        uses: ./.github/workflows/action.yml
+        uses: ./action.yml
       - run: echo 'Done'
