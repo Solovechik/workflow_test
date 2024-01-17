@@ -1,6 +1,6 @@
 name: main wf
 on:
-  push
+  workflow_dispatch
 
 jobs:
   call_local_wf:
@@ -9,5 +9,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Call local wf
-        uses: ./.github/workflow/sub_wf.yml
+        uses: ./.github/workflows/action.yml
       - run: echo 'Done'
