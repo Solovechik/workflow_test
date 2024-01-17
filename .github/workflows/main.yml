@@ -1,0 +1,13 @@
+name: main wf
+on:
+  push
+
+jobs:
+  call_local_wf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Call locak wf
+        uses: ./.github/workflow/sub_wf
+      - run: echo 'Done'
