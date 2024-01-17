@@ -4,10 +4,4 @@ on:
 
 jobs:
   call_local_wf:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Call local wf
-        uses: ./action.yml
-      - run: echo 'Done'
+    uses: ./.github/workflows/action.yml
