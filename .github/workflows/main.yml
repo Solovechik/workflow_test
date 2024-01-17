@@ -8,6 +8,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Call locak wf
-        uses: ./.github/workflow/sub_wf
+      - name: Call local wf
+        uses: ./.github/workflow/sub_wf.yml
       - run: echo 'Done'
