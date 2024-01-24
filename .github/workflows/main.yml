@@ -1,7 +1,12 @@
 name: main wf
 on:
-  workflow_dispatch
+  push
+  # workflow_dispatch
 
 jobs:
   call_local_wf:
     uses: ./.github/workflows/action.yml
+
+  test:
+    runs-on: ubuntu-latest
+    run: echo ${{ github.ref }}
