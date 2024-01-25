@@ -45,15 +45,14 @@ jobs:
             exit 1
           fi
 
-      - name: Workflow trigger
-        run: |
-          curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.ACTIONS_KEY }}" \
-            https://api.github.com/repos/Solovechik/triggered_workflow_test/actions/workflows/workflow_to_trigger.yml/dispatches \
-            -d '{"ref":"refs/heads/master","inputs":{"version":"${{ steps.generate_version.outputs.version }}"}}'
-
+      # - name: Workflow trigger
+      #   run: |
+      #     curl \
+      #       -X POST \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       -H "Authorization: token ${{ secrets.ACTIONS_KEY }}" \
+      #       https://api.github.com/repos/Solovechik/triggered_workflow_test/actions/workflows/workflow_to_trigger.yml/dispatches \
+      #       -d '{"inputs":"${{ steps.generate_version.outputs.version }}"}'
 
       # - name: Create Release
       #   id: create_release
