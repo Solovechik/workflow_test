@@ -5,6 +5,9 @@ on:
   pull_request:
     # types: [ labeled ]
 
+env:
+  some_var: '123'
+
 permissions:
   contents: write
     
@@ -17,33 +20,38 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
-      - name: Get previous tag
-        id: previous_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      - name: check var
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          var: ${{ env.some_var }}
+        run: echo $var
 
-      - name: Get next minor version
-        id: sem_versions
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: ${{ steps.previous_tag.outputs.tag }}
+      # - name: Get previous tag
+      #   id: previous_tag
+      #   uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate version
-        id: generate_version
-        run: |   
-          if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
-            echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
-            echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
-            echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
-          else
-            echo 'Wrong tag'
-            exit 1
-          fi
+      # - name: Get next minor version
+      #   id: sem_versions
+      #   uses: "WyriHaximus/github-action-next-semvers@v1"
+      #   with:
+      #     version: ${{ steps.previous_tag.outputs.tag }}
+
+      # - name: Generate version
+      #   id: generate_version
+      #   run: |   
+      #     if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
+      #       echo "version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+      #     elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
+      #       echo "version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+      #     elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
+      #       echo "version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+      #     else
+      #       echo 'Wrong tag'
+      #       exit 1
+      #     fi
 
       # - name: Workflow trigger
       #   run: |
