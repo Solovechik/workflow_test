@@ -1,49 +1,55 @@
 name: Testing actions
 run-name: ${{ github.actor }} is testing out actions
 on: 
-  # push:
-  pull_request:
+  push:
+  # pull_request:
     # types: [ labeled ]
 
 permissions:
   contents: write
     
 jobs:
-  Label_and_sem_versions:
-    runs-on: ["self-hosted", "can-run-medium-job"]
-    permissions:
-      contents: write
+  some_job:
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 
+      - name: Push label
+        run: echo ${{ github.event.push }}
+      
+  # Label_and_sem_versions:
+  #   runs-on: ["self-hosted", "can-run-medium-job"]
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0 
 
-      - name: Get previous tag
-        id: previous_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get previous tag
+      #   id: previous_tag
+      #   uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get next minor version
-        id: sem_versions
-        uses: "WyriHaximus/github-action-next-semvers@v1"
-        with:
-          version: ${{ steps.previous_tag.outputs.tag }}
+      # - name: Get next minor version
+      #   id: sem_versions
+      #   uses: "WyriHaximus/github-action-next-semvers@v1"
+      #   with:
+      #     version: ${{ steps.previous_tag.outputs.tag }}
 
-      - name: Generate version
-        id: generate_version
-        run: |   
-          if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
-            echo v_patch #"version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
-            echo v_minor #"version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
-          elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
-            echo v_major #"version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
-          else
-            echo 'Wrong tag'
-            exit 1
-          fi
+      # - name: Generate version
+      #   id: generate_version
+      #   run: |   
+      #     if ${{ contains(github.event.pull_request.labels.*.name, 'patch') }}; then
+      #       echo v_patch #"version=${{ steps.sem_versions.outputs.v_patch }}" >> $GITHUB_OUTPUT
+      #     elif ${{ contains(github.event.pull_request.labels.*.name, 'minor') }}; then
+      #       echo v_minor #"version=${{ steps.sem_versions.outputs.v_minor }}" >> $GITHUB_OUTPUT
+      #     elif ${{ contains(github.event.pull_request.labels.*.name, 'major') }}; then
+      #       echo v_major #"version=${{ steps.sem_versions.outputs.v_major }}" >> $GITHUB_OUTPUT
+      #     else
+      #       echo 'Wrong tag'
+      #       exit 1
+      #     fi
 
       # - name: Workflow trigger
       #   run: |
