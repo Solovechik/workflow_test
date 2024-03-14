@@ -1,14 +1,23 @@
 name: main wf
 on:
   # push
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      some:
+        default: false
 
 jobs:
-  call_local_wf:
-    uses: ./.github/workflows/action.yml
-
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: some
-        run: echo ${{ github.ref }}
+      - name: any
+        if: inputs.some
+        uses: docker/setup-buildx-action@v3
+  # call_local_wf:
+    # uses: ./.github/workflows/action.yml
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: some
+  #       run: echo ${{ github.ref }}
