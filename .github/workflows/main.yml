@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: any
-        if: ${{ inputs.some == 'true' }}
+        if: inputs.some
         uses: docker/setup-buildx-action@v3
   # call_local_wf:
     # uses: ./.github/workflows/action.yml
