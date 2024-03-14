@@ -15,7 +15,7 @@ jobs:
   call_local_wf:
     uses: ./.github/workflows/action.yml
     with:
-      some: false
+      some: true
 
   # test:
   #   runs-on: ubuntu-latest
