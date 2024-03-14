@@ -1,11 +1,18 @@
 name: Sub wf
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      some:
+        type: boolean
+        default: false
 
 jobs:
     do_some_work:
       runs-on: ubuntu-latest
       steps:
-        - name: Some work 
-          run: echo ${{ github.ref }}
+      #   - name: Some work 
+      #     run: echo ${{ github.ref }}
+        - name: any
+          if: inputs.some
+          uses: docker/setup-buildx-action@v3
     
