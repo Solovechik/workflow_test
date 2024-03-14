@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     env:
-      cond: false
+      cond: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: any
