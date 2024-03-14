@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       some:
+        type: boolean
         default: false
 
 jobs:
