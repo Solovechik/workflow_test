@@ -10,11 +10,11 @@ on:
 jobs:
   test:
     env:
-      cond: ${{ false }}
+      cond: false
     runs-on: ubuntu-latest
     steps:
       - name: any
-        if: env.cond
+        if: ${{ env.cond }}
         uses: docker/setup-buildx-action@v3
   # call_local_wf:
     # uses: ./.github/workflows/action.yml
