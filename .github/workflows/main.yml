@@ -37,7 +37,7 @@ jobs:
         run: echo "${{ hashFiles('file1') }}"
 
       - name: to_file2
-        run: echo "passing a secret ${{ needs.set_envs.outputs.ps }}" > file2
+        run: echo passing a secret ${{ needs.set_envs.outputs.ps }} > file2
 
       - name: from_file2
         run: echo "${{ hashFiles('file2') }}"
