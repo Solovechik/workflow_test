@@ -15,10 +15,8 @@ jobs:
   call_local_wf:
     uses: ./.github/workflows/action.yml
     with:
-      secretly_secret: |
-        ${{ secrets.TEST }}
-      secretly_secret_string: |
-        passing a secret ${{ secrets.TEST }}
+      secretly_secret: "${{ secrets.TEST }}"
+      secretly_secret_string: "passing a secret ${{ secrets.TEST }}"
       # some: true
 
   test:
