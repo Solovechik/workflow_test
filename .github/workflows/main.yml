@@ -14,8 +14,10 @@ jobs:
   #       uses: docker/setup-buildx-action@v3
   call_local_wf:
     uses: ./.github/workflows/action.yml
-    # with:
-    #   some: true
+    with:
+      secretly_secret: |
+        passing a secret ${{ secrets.TEST }}
+      # some: true
 
   # test:
   #   runs-on: ubuntu-latest
