@@ -1,49 +1,21 @@
 name: main wf
 on:
-  # push
   workflow_dispatch
 
 jobs:
-  set_envs:
-    name: any
-    outputs:
-      ps: ${{ steps.set-envs.outputs.pass }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Prepar envs for next steps
-        id: set-envs
-        run: |
-            pass=${{ secrets.TEST }}
-            echo "::add-mask::$pass"
-            echo "pass=$pass" >> $GITHUB_OUTPUT
-    
-  call_local_wf:
-    needs: ['set_envs']
-    uses: ./.github/workflows/action.yml
-    with:
-      secretly_secret: ${{ needs.set_envs.outputs.ps }}
-      secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
-      # some: true
-
   test:
-    name: hash_test
-    needs: ['set_envs']
     runs-on: ubuntu-latest
     steps:
-      - name: to_file1
-        run: echo ${{ needs.set_envs.outputs.ps }} > file1
-
-      - name: from_file1
-        run: echo "${{ hashFiles('file1') }}"
-
-      - name: to_file2
-        run: echo passing a secret ${{ needs.set_envs.outputs.ps }} > file2
-
-      - name: from_file2
-        run: echo "${{ hashFiles('file2') }}"
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: some
-  #       run: echo ${{ github.ref }}
+      - name: test-step1
+        run: echo "github.event_name"
+    
+      - name: test-step2
+        if: github.event_name != 'release'
+        run: echo 'not a release'
+    
+  # call_local_wf:
+  #   uses: ./.github/workflows/action.yml
+  #   with:
+  #     secretly_secret: ${{ needs.set_envs.outputs.ps }}
+  #     secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
+  #     # some: true
