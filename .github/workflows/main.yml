@@ -21,6 +21,22 @@ jobs:
         passing a secret ${{ secrets.TEST }}
       # some: true
 
+  test:
+    name: hash_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: to_file1
+        run: echo ${{ secrets.TEST }} > file1
+
+      - name: from_file1
+        run: echo "${{ hashFiles('file1') }}"
+
+      - name: to_file2
+        run: echo "passing a secret ${{ secrets.TEST }}" > file2
+
+      - name: from_file2
+        run: echo "${{ hashFiles('file2') }}"
+
   # test:
   #   runs-on: ubuntu-latest
   #   steps:
