@@ -3,23 +3,26 @@ on:
   # push
   workflow_dispatch
 
-env:
-  s: ${{ secrets.TEST }}
-
 jobs:
-  # test:
-  #   env:
-  #     cond: false
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: any
-  #       if: ${{ fromJSON(env.cond) }}
-  #       uses: docker/setup-buildx-action@v3
+  set_envs:
+    name: any
+    outputs:
+      ps: ${{ steps.set-envs.outputs.pass }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepar envs for next steps
+        id: set-envs
+        run: |
+            pass=${{ secrets.TEST }}
+            echo "::add-mask::$pass"
+            echo "pass=$pass" >> $GITHUB_OUTPUT
+    
   call_local_wf:
+    needs: ['set_envs']
     uses: ./.github/workflows/action.yml
     with:
-      secretly_secret: ${{ env.s }}
-      secretly_secret_string: "passing a secret ${{ env.s }}"
+      secretly_secret: ${{ needs.set_envs.outputs.ps }}
+      secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
       # some: true
 
   test:
