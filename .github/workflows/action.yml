@@ -5,14 +5,37 @@ on:
       some:
         type: boolean
         default: false
+      secretly_secret:
+        type: string
+        required: false
+        default: ''
+      secretly_secret_string:
+        type: string
+        required: false
+        default: ''
 
 jobs:
     do_some_work:
       runs-on: ubuntu-latest
       steps:
-      #   - name: Some work 
-      #     run: echo ${{ github.ref }}
-        - name: any
-          if: inputs.some
-          uses: docker/setup-buildx-action@v3
+        - name: check secretly_secret
+          run: echo ${{ inputs.secretly_secret }}
+
+        - name: check secretly_secret_string
+          run: echo ${{ inputs.secretly_secret_string }}
+
+        - name: to_file1
+          run: echo ${{ inputs.secretly_secret }} > file1
+  
+        - name: from_file1
+          run: echo "${{ hashFiles('file1') }}"
+  
+        - name: to_file2
+          run: echo ${{ inputs.secretly_secret_string }} > file2
+  
+        - name: from_file2
+          run: echo "${{ hashFiles('file2') }}"
+        # - name: any
+        #   if: inputs.some
+        #   uses: docker/setup-buildx-action@v3
     
