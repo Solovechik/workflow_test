@@ -27,16 +27,17 @@ jobs:
 
   test:
     name: hash_test
+    needs: ['set_envs']
     runs-on: ubuntu-latest
     steps:
       - name: to_file1
-        run: echo ${{ env.s }} > file1
+        run: echo ${{ needs.set_envs.outputs.ps }} > file1
 
       - name: from_file1
         run: echo "${{ hashFiles('file1') }}"
 
       - name: to_file2
-        run: echo "passing a secret ${{ env.s }}" > file2
+        run: echo "passing a secret ${{ needs.set_envs.outputs.ps }}" > file2
 
       - name: from_file2
         run: echo "${{ hashFiles('file2') }}"
