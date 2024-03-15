@@ -10,8 +10,8 @@ jobs:
         run: echo ${{ github.event_name }}
     
       - name: test-step2
-        if: "github.event_name != 'workflow_dispatch'"
-        run: echo 'not a release'
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo 'workflow_dispatch'
     
   # call_local_wf:
   #   uses: ./.github/workflows/action.yml
