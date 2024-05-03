@@ -16,7 +16,7 @@ jobs:
           my_dict: |
             {
               'dpth': 100,
-              'ref_from': 'none'
+              'ref_from': 'master'
             }
     
   # call_local_wf:
