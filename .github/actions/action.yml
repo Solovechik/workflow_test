@@ -14,7 +14,7 @@ runs:
         dpth: ${{ inputs.my_int }}
       uses: actions/checkout@v3
       with:
-        fetch-depth: dpth
+        fetch-depth: $dpth
 
     - name: echo
       env: ${{ fromJSON(inputs.my_dict) }}
@@ -27,5 +27,5 @@ runs:
       env: ${{ fromJSON(inputs.my_dict) }}
       uses: actions/checkout@v3
       with:
-        fetch-depth: $dpth
-        ref: $ref_from
+        fetch-depth: ${{ env.dpth }}
+        ref: ${{ env.ref_from }}
