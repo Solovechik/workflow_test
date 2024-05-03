@@ -6,12 +6,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: test-step1
-        run: echo ${{ github.event_name }}
-    
-      - name: test-step2
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo 'workflow_dispatch'
+      - name: action test
+        uses: ./.github/actions/test_action.yml
+        with:
+          my_int: 100
+          my_dict: |
+            {
+              'dpth': 100,
+              'ref_from': 'none'
+            }
     
   # call_local_wf:
   #   uses: ./.github/workflows/action.yml
