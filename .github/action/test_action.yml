@@ -1,0 +1,30 @@
+name: Test
+description: testy description
+inputs:
+  my_int:
+    default: 0
+  my_dict:
+    default: "{}"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      env:
+        dpth: ${{ inputs.my_int }}
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: dpth
+
+    - name: echo
+      env: ${{ fromJSON(inputs.my_dict) }}
+      run: |
+        echo $dpth;
+        echo $ref_from
+
+    - name: Checkout2
+      env: ${{ fromJSON(inputs.my_dict) }}
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: $dpth
+        ref: $ref_from
