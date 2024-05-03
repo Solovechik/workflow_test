@@ -18,6 +18,7 @@ runs:
 
     - name: echo
       env: ${{ fromJSON(inputs.my_dict) }}
+      shell: bash
       run: |
         echo $dpth;
         echo $ref_from
