@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: action test
-        uses: ./.github/actions
+        uses: solovechik/workflow_test/.github/actions/test_action #./.github/actions
         with:
           my_int: 100
           my_dict: |
