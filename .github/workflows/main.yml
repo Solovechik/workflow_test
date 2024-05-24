@@ -8,16 +8,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Get run attempt number
+        run: |
+          if [[ ${{ github.run_attempt }} == 1 ]];
+            then
+              echo 1
+            else
+              echo ${{ github.run_attempt }}
+          fi
+            
       
-      - name: action test
-        uses: ./.github/actions
-        with:
-          my_int: 100
-          my_dict: |
-            {
-              'dpth': 100,
-              'ref_from': 'master'
-            }
+      # - name: action test
+      #   uses: ./.github/actions
+      #   with:
+      #     my_int: 100
+      #     my_dict: |
+      #       {
+      #         'dpth': 100,
+      #         'ref_from': 'master'
+      #       }
     
   # call_local_wf:
   #   uses: ./.github/workflows/action.yml
