@@ -1,6 +1,7 @@
 name: main wf
 on:
-  workflow_dispatch
+  - workflow_dispatch
+  - pull_request
 
 jobs:
   test:
@@ -9,14 +10,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get run attempt number
-        run: |
-          if [[ ${{ github.run_attempt }} == 1 ]];
-            then
-              echo 1
-            else
-              echo ${{ github.run_attempt }}
-          fi
+  call_local_wf:
+    uses: ./.github/workflows/action.yml
+    # with:
+    #   secretly_secret: ${{ needs.set_envs.outputs.ps }}
+    #   secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
+      # some: true
+
+      # - name: Get run attempt number
+      #   run: |
+      #     if [[ ${{ github.run_attempt }} == 1 ]];
+      #       then
+      #         echo 1
+      #       else
+      #         echo ${{ github.run_attempt }}
+      #     fi
             
       
       # - name: action test
@@ -29,9 +37,3 @@ jobs:
       #         'ref_from': 'master'
       #       }
     
-  # call_local_wf:
-  #   uses: ./.github/workflows/action.yml
-  #   with:
-  #     secretly_secret: ${{ needs.set_envs.outputs.ps }}
-  #     secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
-  #     # some: true
