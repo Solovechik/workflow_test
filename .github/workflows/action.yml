@@ -4,18 +4,19 @@ on:
     inputs:
       checkout_ref:
         type: string
+        required: false
 
 jobs:
     do_some_work:
       runs-on: ubuntu-latest
       steps:
         - name: echo ref
-          run: echo ${{ github.ref }}
+          run: echo ${{ github.event_name }}
 
-        - name: echo ref2
-          run: echo ${{ inputs.checkout_ref }}
+        # - name: echo ref2
+        #   run: echo ${{ inputs.checkout_ref }}
 
-        - name: Checkout
-          uses: actions/checkout@v4
-          with:
-            ref: ${{ inputs.checkout_ref }}
+        # - name: Checkout
+        #   uses: actions/checkout@v4
+        #   with:
+        #     ref: ${{ inputs.checkout_ref }}
