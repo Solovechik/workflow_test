@@ -1,6 +1,9 @@
 name: Sub wf
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      checkout_ref:
+        type: string
 
 jobs:
     do_some_work:
@@ -8,3 +11,11 @@ jobs:
       steps:
         - name: echo ref
           run: echo ${{ github.ref }}
+
+        - name: echo ref2
+          run: echo ${{ inputs.checkout_ref }}
+
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            ref: ${{ inputs.checkout_ref }}
