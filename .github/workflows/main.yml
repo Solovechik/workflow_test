@@ -16,7 +16,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    if: ${{ ! inputs.some == '' }}
+    if: ${{ ! inputs.some == "''" }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
