@@ -27,7 +27,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["oleggur", "technomonah", "Solovechik"]'), github.actor)
+    if: contains(fromJSON('["oleggur", "technomonah", "Solovechik1"]'), github.actor)
     # if: ${{ inputs.some != 'none' }}
     steps:
       - name: Checkout
