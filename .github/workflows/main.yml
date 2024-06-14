@@ -30,6 +30,7 @@ jobs:
             echo 'third case'
           elif [[ inputs.some == '' ]]; then
             echo 'forth case'
+          fi
             
   # call_local_wf:
   #   uses: ./.github/workflows/action.yml
