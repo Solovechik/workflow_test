@@ -21,7 +21,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: some
-        run: echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; ${{ github.actor }}
+        run: |
+          echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
+          echo ${{ github.actor_id }}
 
   test:
     runs-on: ubuntu-latest
