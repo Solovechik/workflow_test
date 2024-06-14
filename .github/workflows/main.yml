@@ -25,7 +25,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    if: ${{ !inputs.some == 'none' }}
+    if: ${{ inputs.some != 'none' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
