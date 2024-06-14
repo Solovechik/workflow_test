@@ -7,8 +7,8 @@ on:
         default: ''
         options: 
           - ''
-          - one
-          - two
+          - 'one'
+          - "two"
   # - pull_request
   # - push
 
@@ -20,8 +20,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-  call_local_wf:
-    uses: ./.github/workflows/action.yml
+      - name: comp
+        run: |
+          if [[ inputs.some == one ]]; then
+            echo 'first case'
+          elif [[ inputs.some == 'one' ]]; then
+            echo 'second case'
+          elif [[ inputs.some == "one" ]]; then
+            echo 'third case'
+          elif [[ inputs.some == '' ]]; then
+            echo 'forth case'
+            
+  # call_local_wf:
+  #   uses: ./.github/workflows/action.yml
     # with:
     #   secretly_secret: ${{ needs.set_envs.outputs.ps }}
     #   secretly_secret_string: "passing a secret ${{ needs.set_envs.outputs.ps }}"
