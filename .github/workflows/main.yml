@@ -22,13 +22,13 @@ jobs:
 
       - name: comp
         run: |
-          if [[ inputs.some == one ]]; then
+          if [[ ${{ inputs.some }} == one ]]; then
             echo 'first case'
-          elif [[ inputs.some == 'one' ]]; then
+          elif [[ ${{ inputs.some }} == 'one' ]]; then
             echo 'second case'
-          elif [[ inputs.some == "one" ]]; then
+          elif [[ ${{ inputs.some }} == "one" ]]; then
             echo 'third case'
-          elif [[ inputs.some == '' ]]; then
+          elif [[ ${{ inputs.some }} == '' ]]; then
             echo 'forth case'
           fi
             
