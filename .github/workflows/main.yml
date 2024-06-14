@@ -4,9 +4,9 @@ on:
     inputs:
       some:
         type: choice
-        default: ''
+        default: ""
         options: 
-          - ''
+          - ""
           - 'one'
           - "two"
   # - pull_request
