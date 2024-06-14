@@ -5,7 +5,10 @@ on:
       some:
         type: choice
         default: ''
-        options: ['', one, two]
+        options: 
+          - ''
+          - one
+          - two
   # - pull_request
   # - push
 
