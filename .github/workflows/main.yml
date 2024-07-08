@@ -23,11 +23,11 @@ jobs:
         run: |
           git fetch origin --quiet
           git diff origin/${{ github.head_ref }} origin/master > diff
-          if [[ -z diff ]];
+          if [[ ! -z diff ]];
             then
-              echo 'The branch is up-to-date'
+              echo 'The branch is up-to-date with Master'
             else
-              echo 'Branch is not up-to-date with main'
+              echo 'The branch is not up-to-date with Master'
               exit 1
           fi
 
