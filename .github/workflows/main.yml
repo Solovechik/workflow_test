@@ -19,6 +19,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for differences
+        run: |
+          git fetch origin --quiet
+          git diff origin/main -- ${{ github.sha }} > diff
+          if [[ -z diff ]];
+            then
+              echo 'The branch is up-to-date with Master'
+              rm diff
+            else
+              echo 'The branch is not up-to-date with Master'
+              exit 1
+          fi
+
       - name: some
         run: |
           echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
