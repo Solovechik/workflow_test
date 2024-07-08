@@ -22,7 +22,7 @@ jobs:
       - name: Check for differences
         run: |
           git fetch origin
-          git diff origin/${{ github.head_ref }} origin/master --exit-code --quiet
+          git diff origin/${{ github.head_ref }} origin/master --exit-code --quiet > /dev/null
           echo $?
           if [[ $? == 1 ]];
             then
