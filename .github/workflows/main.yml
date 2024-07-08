@@ -16,13 +16,13 @@ jobs:
   before_test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Check for differences
         run: |
           git fetch origin
           git diff --exit-code ${{ github.head_ref }} origin/main || echo "Branch is not up to date with main"
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: some
         run: |
