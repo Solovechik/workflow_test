@@ -21,9 +21,7 @@ jobs:
 
       - name: Check for differences
         run: |
-          echo git log -n 1 origin/main --pretty=format:"%H"
-          branch_commit=$(git log -n 1 origin/${{ github.head_ref }} --pretty=format:"%H")
-          git merge-base --is-ancestor $master_commit $branch_commit
+          git merge-base --is-ancestor ${{ github.event.pull_request.head.sha }} ${{ github.sha }}
 
           echo $?
           # if [[  ]];
