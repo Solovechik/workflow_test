@@ -26,15 +26,15 @@ jobs:
           if [[ -z diff ]];
             then
               echo 'The branch is up-to-date'
-              # exit $?
             else
               echo 'Branch is not up-to-date with main'
+              exit 1
           fi
 
-      # - name: some
-      #   run: |
-      #     echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
-      #     echo ${{ github.actor_id }}
+      - name: some
+        run: |
+          echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
+          echo ${{ github.actor_id }}
 
   test:
     runs-on: ubuntu-latest
