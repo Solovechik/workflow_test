@@ -21,15 +21,16 @@ jobs:
 
       - name: Check for differences
         run: |
-          git fetch origin --quiet
-          git diff origin/${{ github.head_ref }} origin/master > diff
-          if [[ -z diff ]];
-            then
-              echo 'The branch is up-to-date with Master'
-            else
-              echo 'The branch is not up-to-date with Master'
-              exit 1
-          fi
+          git merge-base --is-ancestor origin/master origin/${{ github.head_ref }}
+          echo $?
+          # if [[  ]];
+          #   then
+          #     echo 'The branch is up-to-date with Master'
+          #     rm diff
+          #   else
+          #     echo 'The branch is not up-to-date with Master'
+          #     exit 1
+          # fi
 
       - name: some
         run: |
