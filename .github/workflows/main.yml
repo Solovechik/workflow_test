@@ -21,7 +21,7 @@ jobs:
 
       - name: Check for differences
         run: |
-          git checkout origin/main
+          git checkout main
           master_commit=${{ github.sha }}
           git checkout origin/${{ github.head_ref }}
           git merge-base --is-ancestor $master_commit ${{ github.sha }}
