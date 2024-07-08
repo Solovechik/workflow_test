@@ -22,19 +22,14 @@ jobs:
       - name: Check for differences
         run: |
           git fetch origin
-          git diff origin/${{ github.head_ref }} origin/master --exit-code && echo "Branch is not up to date with main"
+          git diff origin/${{ github.head_ref }} origin/master --exit-code --quiet
           echo $?
-          if [[ $? == '1' ]];
-            then
-              exit 'Branch is not up to date with main'
-            else
-              echo 'The branch is up-to-date'
-          fi
+          [[ $? == 1 ]] && exit 'Branch is not up to date with main' || echo 'The branch is up-to-date'
 
-      - name: some
-        run: |
-          echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
-          echo ${{ github.actor_id }}
+      # - name: some
+      #   run: |
+      #     echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
+      #     echo ${{ github.actor_id }}
 
   test:
     runs-on: ubuntu-latest
