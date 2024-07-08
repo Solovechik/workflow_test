@@ -21,7 +21,7 @@ jobs:
 
       - name: Check for differences
         run: |
-          git merge-base --is-ancestor origin/master origin/${{ github.head_ref }}
+          git merge-base --is-ancestor origin/main origin/${{ github.head_ref }}
           echo $?
           # if [[  ]];
           #   then
