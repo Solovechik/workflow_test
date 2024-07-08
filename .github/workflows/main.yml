@@ -12,7 +12,6 @@ on:
   pull_request:
   # - push
 
-
 jobs:
   before_test:
     runs-on: ubuntu-latest
