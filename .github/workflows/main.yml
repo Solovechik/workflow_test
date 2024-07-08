@@ -21,7 +21,9 @@ jobs:
 
       - name: Check for differences
         run: |
-          master_commit=$(git rev-parse --short ${{ github.event.pull_request.head.sha }})
+          git checkout origin/main
+          master_commit=${{ github.sha }}
+          git checkout origin/${{ github.head_ref }}
           git merge-base --is-ancestor $master_commit ${{ github.sha }}
 
           echo $?
