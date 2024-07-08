@@ -21,20 +21,16 @@ jobs:
 
       - name: Check for differences
         run: |
-          git checkout main
-          master_commit=${{ github.sha }}
-          git checkout origin/${{ github.head_ref }}
-          git merge-base --is-ancestor $master_commit ${{ github.sha }}
-
-          echo $?
-          # if [[  ]];
-          #   then
-          #     echo 'The branch is up-to-date with Master'
-          #     rm diff
-          #   else
-          #     echo 'The branch is not up-to-date with Master'
-          #     exit 1
-          # fi
+          git fetch origin --quiet
+          git diff origin/main -- ${{ github.sha }} > diff
+          if [[ -z diff ]];
+            then
+              echo 'The branch is up-to-date with Master'
+              rm diff
+            else
+              echo 'The branch is not up-to-date with Master'
+              exit 1
+          fi
 
       - name: some
         run: |
