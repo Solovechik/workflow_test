@@ -9,7 +9,7 @@ on:
           - none
           - one
           - two
-  # - pull_request
+  pull_request:
   # - push
 
 
