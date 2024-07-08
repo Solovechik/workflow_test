@@ -22,7 +22,7 @@ jobs:
       - name: Check for differences
         run: |
           git fetch origin
-          git diff --exit-code ${{ github.head_ref }} origin/main || echo "Branch is not up to date with main"
+          git diff --exit-code ${{ github.head_ref }} origin/master || echo "Branch is not up to date with main"
 
       - name: some
         run: |
