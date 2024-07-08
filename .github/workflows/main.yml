@@ -24,7 +24,7 @@ jobs:
           git fetch origin
           git diff origin/${{ github.head_ref }} origin/master --exit-code --quiet
           echo $?
-          [[ $? == 1 ]] && exit 'Branch is not up to date with main' || echo 'The branch is up-to-date'
+          [[ $? == 1 ]] && echo 'Branch is not up to date with main' && exit  || echo 'The branch is up-to-date'
 
       # - name: some
       #   run: |
