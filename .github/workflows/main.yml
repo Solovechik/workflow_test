@@ -21,12 +21,14 @@ jobs:
 
       - name: Check for differences
         run: |
-          # git fetch origin
-          git diff --exit-code origin/${{ github.head_ref }} origin/master || echo "Branch is not up to date with main"
+          git fetch origin
+          git diff origin/${{ github.head_ref }} origin/master --exit-code && echo "Branch is not up to date with main"
           echo $?
           if [[ $? == '1' ]];
             then
               exit 'Branch is not up to date with main'
+            else
+              echo 'The branch is up-to-date'
           fi
 
       - name: some
