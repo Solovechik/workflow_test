@@ -13,36 +13,30 @@ on:
   # - push
 
 jobs:
-  before_test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # before_test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: some
-        run: |
-          echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
-          echo ${{ github.actor_id }}
+  #     - name: some
+  #       run: |
+  #         echo ${{ inputs.some }}; echo ${{ inputs.some == 'none' }}; echo ${{ ! inputs.some == 'none' }}; echo ${{ github.actor }};
+  #         echo ${{ github.actor_id }}
 
   test:
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["oleggur", "technomonah", "Solovechik1"]'), github.actor)
+    # if: contains(fromJSON('["oleggur", "technomonah", "Solovechik1"]'), github.actor)
     # if: ${{ inputs.some != 'none' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: comp
-        run: |
-          if [[ ${{ inputs.some }} == 'one' ]]; then
-            echo 'first case'
-          elif [[ ${{ inputs.some }} == 'one' ]]; then
-            echo 'second case'
-          elif [[ ${{ inputs.some }} == "one" ]]; then
-            echo 'third case'
-          elif [[ ${{ inputs.some }} == '' ]]; then
-            echo 'forth case'
-          fi
+        run: exit 1
+
+      - name: some
+        run: echo OK
             
   # call_local_wf:
   #   uses: ./.github/workflows/action.yml
