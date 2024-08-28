@@ -26,6 +26,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    continue-on-error: true
     # if: contains(fromJSON('["oleggur", "technomonah", "Solovechik1"]'), github.actor)
     # if: ${{ inputs.some != 'none' }}
     steps:
@@ -33,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: comp
-        continue-on-error: true
+        # continue-on-error: true
         run: exit 1
 
       - name: some
