@@ -11,6 +11,8 @@ on:
           - two
   pull_request:
   merge_group:
+    types:
+      - checks_requested
   # - push
 
 jobs:
