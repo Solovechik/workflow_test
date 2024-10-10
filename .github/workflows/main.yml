@@ -12,10 +12,12 @@ on:
   pull_request:
   # - push
 
+permissions:
+      contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: checkout
         uses: actions/checkout@v4
