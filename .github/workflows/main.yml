@@ -10,7 +10,7 @@ on:
           - one
           - two
   pull_request:
-  # - push
+  push:
 
 permissions:
       contents: write
