@@ -27,7 +27,7 @@ jobs:
       - name: file creation
         run: |
           echo wrongone > manifest.json
-          echo rightone > target/manifest.json
+          echo $(date +'%Y-%m-%dT%H:%M:%S') > target/manifest.json
 
       - name: save files to repo
         uses: stefanzweifel/git-auto-commit-action@v5
