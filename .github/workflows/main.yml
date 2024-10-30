@@ -27,7 +27,6 @@ jobs:
       - name: file creation
         run: |
           echo wrongone > manifest.json
-          mkdir target
           echo rightone > target/manifest.json
 
       - name: save files to repo
